@@ -51,62 +51,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Get categories.
      */
-    public function store(ProductRequest $request) : JsonResponse
+    public function getCategories(): JsonResponse
     {
-        // Validate the form fields.
-        $validatedFormFields = $request->validated();
+        // Get all categories.
+        $categories = Category::all();
 
-        // Create a new product.
-        $product = Product::create($validatedFormFields);
-
-        // Success check for product creation.
-        if (!$product) {
-            // Return an error.
-            return response()->json(['message' => 'An error occurred.'], 500);
-        }
-
-        // Return the product.
-        return response()->json(['message' => 'Product has been added successfully!', ['product' => $product]], 201);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProductRequest $request, Product $product)
-    {
-        // Validate the form fields.
-        $validatedFormFields = $request->validated();
-
-        // Update the validated product.
-        $product = $product->update($validatedFormFields);
-
-        // Success check for product modification.
-        if (!$product) {
-            // Return an error.
-            return response()->json(['message' => 'An error occurred.'], 500);
-        }
-
-        // Return the product.
-        return response()->json(['message' => 'Product has updated successfully!', ['product' => $product]], 201);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        // Delete the product.
-        $delete = $product->delete();
-
-        // Success check for product deletion.
-        if (!$delete) {
-            // Return an error.
-            return response()->json(['message' => 'An error occurred.'], 500);
-        }
-
-        // Return a success message.
-        return response()->json(['message' => 'Product has been deleted successfully!'], 200);
+        // Return the categories.
+        return response()->json($categories);
     }
 }
